@@ -1,6 +1,7 @@
 
 import { Image, StyleSheet, Text, View,Pressable } from 'react-native'
 import React from 'react'
+import { colors, elevation, fonts, radius, spaces } from '../../consdants/app_consts'
 
 const FlatListCard = ({product,onPress}) => {
   return (
@@ -16,16 +17,16 @@ export default FlatListCard
 
 const styles = StyleSheet.create({
      wrapper:{
-        backgroundColor:"rgb(254, 251, 251)",
-        borderRadius:8,elevation:5
+        backgroundColor:colors.background,
+        borderRadius:radius.small,elevation:elevation.middle
      },
      image : {
-        width:"50%",aspectRatio:1,resizeMode:"contain",alignSelf:"center",marginTop:5
+        width:"50%",aspectRatio:1,resizeMode:"contain",alignSelf:"center",marginTop:spaces.small
      },
      title : {
-        fontSize:17,fontWeight:"500",paddingLeft:5,paddingVertical:5
+        fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,paddingLeft:spaces.small,paddingVertical:spaces.small
      },
      price : {
-        fontSize:14,fontWeight:"500",color:"rgb(148, 138, 204)",paddingLeft:5,paddingBottom:5
+        fontSize:fonts.smallSize,fontWeight:fonts.smallWeight,color:colors.secondary,paddingLeft:spaces.small,paddingBottom:spaces.small
      }
 })

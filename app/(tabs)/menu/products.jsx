@@ -4,6 +4,7 @@ import React from 'react'
 import products from '../../../assets/datas/products'
 import FlatListCard from '../../../components/cards/FlatListCard'
 import { router } from 'expo-router'
+import { spaces } from '../../../consdants/app_consts'
 
 export default function Products() {
 
@@ -23,6 +24,7 @@ export default function Products() {
          }}
          contentContainerStyle={styles.contentStyle}
          columnWrapperStyle={styles.columnStyle}
+         showsVerticalScrollIndicator={false}
          numColumns={2}
      />
    </View> 
@@ -32,12 +34,12 @@ export default function Products() {
 
 const styles = StyleSheet.create({
      wrapper:{
-        padding:10
+        padding:spaces.middle
      },
      contentStyle : {
-        gap:10
+        gap:spaces.middle
      },
      columnStyle:{
-       gap:10
+       gap:spaces.middle
      }
 })

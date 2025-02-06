@@ -1,6 +1,7 @@
 
 import { StyleSheet, Text,TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { colors, fonts, radius } from '../../consdants/app_consts'
 
 const CustomButtons = ({buttonStyle,labelStyle,label="",onPress}) => {
   return (
@@ -14,9 +15,9 @@ export default CustomButtons
 
 const styles = StyleSheet.create({
     button : {
-          width:"100%",height:40,backgroundColor:"rgb(171,171,171)",justifyContent:"center",alignItems:"center",borderRadius:12
+          width:"100%",height:40,backgroundColor:colors.gray,justifyContent:"center",alignItems:"center",borderRadius:radius.middle
     },
     label:{
-        fontSize:17,fontWeight:"500",color:"white"
+        fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,color:colors.background
     }
 })
