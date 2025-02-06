@@ -4,7 +4,7 @@ import React from 'react'
 import products from '../../../assets/datas/products'
 import FlatListCard from '../../../components/cards/FlatListCard'
 import { router } from 'expo-router'
-import { spaces } from '../../../consdants/app_consts'
+import { colors, spaces } from '../../../consdants/app_consts'
 
 export default function Products() {
 
@@ -34,7 +34,7 @@ export default function Products() {
 
 const styles = StyleSheet.create({
      wrapper:{
-        padding:spaces.middle
+        padding:spaces.middle,backgroundColor:colors.background,flex:1
      },
      contentStyle : {
         gap:spaces.middle

@@ -7,7 +7,7 @@ const FlatListCard = ({product,onPress}) => {
   return (
     <Pressable style={styles.wrapper} onPress={onPress}>
         <Image style={styles.image} source={{uri:product.image}} />
-        <Text style={styles.title}>{product.name}</Text>
+        <Text style={styles.title} numberOfLines={1}>{product.name}</Text>
         <Text style={styles.price} >$ {product.price}</Text>
     </Pressable>
   )
@@ -17,14 +17,14 @@ export default FlatListCard
 
 const styles = StyleSheet.create({
      wrapper:{
-        backgroundColor:colors.background,
-        borderRadius:radius.small,elevation:elevation.middle
+       flex:1, backgroundColor:colors.background,
+        borderRadius:radius.small,elevation:elevation.small,borderColor:colors.gray,borderWidth:1
      },
      image : {
-        width:"50%",aspectRatio:1,resizeMode:"contain",alignSelf:"center",marginTop:spaces.small
+      width:"50%",aspectRatio:1, resizeMode:"contain",alignSelf:"center",marginTop:spaces.small
      },
      title : {
-        fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,paddingLeft:spaces.small,paddingVertical:spaces.small
+        fontSize:fonts.middleSize,fontWeight:fonts.smallWeight,paddingLeft:spaces.small,paddingVertical:spaces.small
      },
      price : {
         fontSize:fonts.smallSize,fontWeight:fonts.smallWeight,color:colors.secondary,paddingLeft:spaces.small,paddingBottom:spaces.small

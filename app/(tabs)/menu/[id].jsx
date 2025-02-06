@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams } from 'expo-router'
 import products from '../../../assets/datas/products'
 import CustomButtons from '../../../components/buttons/CustomButtons'
 import { colors, elevation, fonts, radius, spaces } from '../../../consdants/app_consts'
@@ -29,7 +29,14 @@ const ProductDetail = () => {
   getProduct()
 
   return (
-    <View style={styles.wrapper}>
+    <>
+      <Stack.Screen 
+         options={{
+             title : product.name
+         }}
+      />
+
+      <View style={styles.wrapper}>
        <Image style={styles.image} source={{uri : product.image}} />
        <Text style={styles.text} numberOfLines={1}>Select Size</Text>
        <View style={styles.sliderWrapper}>
@@ -47,6 +54,8 @@ const ProductDetail = () => {
        </View>
        <CustomButtons  onPress={() => {}} buttonStyle={styles.buttonStyle} label="Add Product" />
     </View>
+    </>
+   
   )
 }
 
@@ -60,10 +69,10 @@ const styles = StyleSheet.create({
         aspectRatio:1,width:"100%",resizeMode:"contain"
      },
      text : {
-          fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,marginVertical:spaces.small
+          fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,marginVertical:spaces.middle
      },
      sliderWrapper : {
-       width:"100%" , flexDirection:"row",justifyContent:"space-around",marginVertical:spaces.middle
+       width:"100%" , flexDirection:"row",justifyContent:"space-around",marginVertical:spaces.high
      },
      sliderContainer: {
         width:40,height:40,borderRadius:radius.circle(40),justifyContent:"center",alignItems:"center",elevation:elevation.small
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
         
      },
       detailsWrapper : {
-        flexDirection:"row",width:"100%",justifyContent:"space-between",alignItems:"center"
+        flexDirection:"row",width:"100%",justifyContent:"space-between",alignItems:"center",marginVertical:"auto"
       },
      buttonStyle :{marginVertical:"auto",elevation:elevation.middle}
 })
