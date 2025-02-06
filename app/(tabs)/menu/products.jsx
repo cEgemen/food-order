@@ -19,7 +19,7 @@ export default function Products() {
          keyExtractor={(item) => item.id}
          renderItem={({item}) => {
                return <>
-                        <FlatListCard product={item} onPress={() => onPress(item.id)} /> 
+                        <FlatListCard product={item} key={item.id + "keyy"} onPress={() => onPress(item.id)} /> 
                      </>
          }}
          contentContainerStyle={styles.contentStyle}

@@ -1,13 +1,13 @@
 
 import React from 'react'
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import StackPressableIcon from '../../../components/buttons/StackPressableIcon'
 import lunchIcon from "../../../assets/icons/lunch.png"
 
 export default function _layout() {
 
   const onPress = () => {
-          
+        router.push("/card")
   }
 
   return (
