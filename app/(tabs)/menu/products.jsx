@@ -3,8 +3,14 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import products from '../../../assets/datas/products'
 import FlatListCard from '../../../components/cards/FlatListCard'
+import { router } from 'expo-router'
 
 export default function Products() {
+
+  const onPress = (id) => {
+       router.push("/menu/"+id)
+  }
+
   return (
    <View  style={styles.wrapper}>
     <FlatList 
@@ -12,7 +18,7 @@ export default function Products() {
          keyExtractor={(item) => item.id}
          renderItem={({item}) => {
                return <>
-                        <FlatListCard product={item} /> 
+                        <FlatListCard product={item} onPress={() => onPress(item.id)} /> 
                      </>
          }}
          contentContainerStyle={styles.contentStyle}
