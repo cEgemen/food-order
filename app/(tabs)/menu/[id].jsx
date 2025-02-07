@@ -1,13 +1,15 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import React, { useContext, useState } from 'react'
+import { router, Stack, useLocalSearchParams } from 'expo-router'
 import products from '../../../assets/datas/products'
 import CustomButtons from '../../../components/buttons/CustomButtons'
 import { colors, elevation, fonts, radius, spaces } from '../../../consdants/app_consts'
 import { productSizes, productSizesRatio } from '../../../consdants/productconsts'
+import { productContext } from '../../../managment/productContext'
+import * as Crypto from "expo-crypto"
 
 const ProductDetail = () => {
-  
+  const {addProduct} = useContext(productContext)
   const [selectIndex,setSelectIndex] = useState(0)
   const {id} = useLocalSearchParams()
   let product = {}
@@ -24,6 +26,11 @@ const ProductDetail = () => {
 
   const selectOnPress = (index) => {
        setSelectIndex(index)
+  }
+
+  const addProductCard = () => {
+       addProduct(product,productSizes[selectIndex])
+       router.back()
   }
  
   getProduct()
@@ -42,8 +49,8 @@ const ProductDetail = () => {
        <View style={styles.sliderWrapper}>
          {productSizes.map((size,index) => {
             return <>
-                      <Pressable style={[styles.sliderContainer,{backgroundColor:selectIndex === index ? colors.gray : colors.background}]} key={size} onPress={() =>  selectOnPress(index)}>
-                         <Text style={[styles.sliderText,{color:selectIndex === index ? colors.background : colors.gray}]}> {size} </Text>
+                      <Pressable style={[styles.sliderContainer,{backgroundColor:selectIndex === index ? colors.dark_gray : colors.background}]} key={Crypto.randomUUID()} onPress={() =>  selectOnPress(index)}>
+                         <Text style={[styles.sliderText,{color:selectIndex === index ? colors.background : colors.dark_gray}]}> {size} </Text>
                       </Pressable> 
                    </>
           })}
@@ -52,7 +59,7 @@ const ProductDetail = () => {
         <Text style={styles.text}>{productSizes[selectIndex]} {product.name}  </Text>
         <Text style={[styles.text,{color:colors.secondary}]}>$ {(product.price * productSizesRatio[selectIndex]).toFixed(2)}</Text> 
        </View>
-       <CustomButtons  onPress={() => {}} buttonStyle={styles.buttonStyle} label="Add Product" />
+       <CustomButtons  onPress={addProductCard} buttonStyle={styles.buttonStyle} label="Add Product" />
     </View>
     </>
    

@@ -7,8 +7,8 @@ const TabPressableIcon = ({colorss,focused,icon,text}) => {
   
     return (
     <TouchableOpacity  style={styles.button} >
-        <Image source={icon} style={[styles.icon,{tintColor:focused ? colors.secondary : colors.gray}]} />
-        <Text style={[styles.label,{color:focused ? colors.secondary : colors.gray}]}>{text}</Text>
+        <Image source={icon} style={[styles.icon,{tintColor:focused ? colors.secondary : colors.light_gray}]} />
+        <Text style={[styles.label,{color:focused ? colors.secondary : colors.light_gray}]}>{text}</Text>
     </TouchableOpacity>
   )
 }

@@ -10,8 +10,6 @@ export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
           headerShown:false,
-          tabBarActiveTintColor:colors.secondary,
-          tabBarInactiveTintColor:colors.gray
     }}>
          <Tabs.Screen
              name='index'

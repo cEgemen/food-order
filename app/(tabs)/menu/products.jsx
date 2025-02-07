@@ -5,6 +5,7 @@ import products from '../../../assets/datas/products'
 import FlatListCard from '../../../components/cards/FlatListCard'
 import { router } from 'expo-router'
 import { colors, spaces } from '../../../consdants/app_consts'
+import * as Crypto from "expo-crypto"
 
 export default function Products() {
 
@@ -16,10 +17,10 @@ export default function Products() {
    <View  style={styles.wrapper}>
     <FlatList 
          data={products}
-         keyExtractor={(item) => item.id}
+         keyExtractor={(item) => Crypto.randomUUID()}
          renderItem={({item}) => {
                return <>
-                        <FlatListCard product={item} key={item.id + "keyy"} onPress={() => onPress(item.id)} /> 
+                        <FlatListCard product={item} onPress={() => onPress(item.id)} /> 
                      </>
          }}
          contentContainerStyle={styles.contentStyle}
@@ -34,7 +35,7 @@ export default function Products() {
 
 const styles = StyleSheet.create({
      wrapper:{
-        padding:spaces.middle,backgroundColor:colors.background,flex:1
+       flex:1, padding:spaces.middle,backgroundColor:colors.background
      },
      contentStyle : {
         gap:spaces.middle

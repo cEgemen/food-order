@@ -18,7 +18,7 @@ export default FlatListCard
 const styles = StyleSheet.create({
      wrapper:{
        flex:1, backgroundColor:colors.background,
-        borderRadius:radius.small,elevation:elevation.small,borderColor:colors.gray,borderWidth:1
+        borderRadius:radius.small,elevation:elevation.small,borderColor:colors.light_gray,borderWidth:1
      },
      image : {
       width:"50%",aspectRatio:1, resizeMode:"contain",alignSelf:"center",marginTop:spaces.small

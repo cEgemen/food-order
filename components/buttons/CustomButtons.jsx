@@ -15,7 +15,7 @@ export default CustomButtons
 
 const styles = StyleSheet.create({
     button : {
-          width:"100%",height:40,backgroundColor:colors.gray,justifyContent:"center",alignItems:"center",borderRadius:radius.middle
+          width:"100%",height:40,backgroundColor:colors.light_gray,justifyContent:"center",alignItems:"center",borderRadius:radius.middle
     },
     label:{
         fontSize:fonts.middleSize,fontWeight:fonts.middleWeight,color:colors.background
