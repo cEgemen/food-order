@@ -10,6 +10,7 @@ export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
           headerShown:false,
+          tabBarHideOnKeyboard:true
     }}>
          <Tabs.Screen
              name='index'
@@ -38,6 +39,19 @@ export default function TabsLayout() {
                  tabBarIcon:({ focused,colors  ,size}) => {
                         return <>
                                   <TabPressableIcon focused={focused} icon={ordersIcon} text={"Orders"} />
+                               </>
+                     },        
+                    }   
+                   }
+         />
+          <Tabs.Screen 
+            name="createAndUpdate"
+            options={{
+                 title:"",
+                 tabBarIconStyle:{width:"100%",height:"100%",justifyContent:"center",alignItems:"center"},
+                 tabBarIcon:({ focused,colors  ,size}) => {
+                        return <>
+                                  <TabPressableIcon focused={focused} icon={ordersIcon} text={"Test"} />
                                </>
                      },        
                     }   
