@@ -7,10 +7,10 @@ import { colors, elevation, fonts, radius, spaces } from '../../consdants/app_co
 
 dayjs.extend(relativeTime)
 
-const FlatListOrderCard = ({order,onPress}) => {
+const FlatListOrderCard = ({order,onPress,cardStyle={}}) => {
      
     return (
-    <Pressable style={styles.wrapper} onPress={onPress}>
+    <Pressable style={[styles.wrapper,cardStyle]} onPress={onPress}>
         <View style={styles.detailsWrapper}>
             <Text style={styles.topDetailsText}>🔪 Order #{order.id}</Text>
             <Text style={styles.topDetailsText}>{order.status}</Text>

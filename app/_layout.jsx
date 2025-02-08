@@ -25,6 +25,13 @@ const AppLayout = () => {
              }}
       />
 
+      <Stack.Screen
+             name='(auth)'
+             options={{
+                  headerShown:false
+             }}
+        />
+
    </Stack>
   </ProductContextProvider> 
    
