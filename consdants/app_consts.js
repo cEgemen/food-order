@@ -3,7 +3,8 @@ export const colors = {
      background : "white",
      text : "black",
      dark_gray : "rgb(181, 171, 171)",
-     light_gray:"rgb(221, 215, 215)",
+     normal_gray:"rgb(221, 215, 215)",
+     light_gray : "rgb(237, 226, 226)",
      secondary : "rgb(148, 138, 204)"
 }
 

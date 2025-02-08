@@ -10,7 +10,8 @@ export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
           headerShown:false,
-          tabBarHideOnKeyboard:true
+          tabBarHideOnKeyboard:true,
+          headerShadowVisible:false
     }}>
          <Tabs.Screen
              name='index'

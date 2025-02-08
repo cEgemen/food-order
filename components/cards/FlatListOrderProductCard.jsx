@@ -1,16 +1,15 @@
 
-
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Order = () => {
+const FlatListOrderProductCard = ({order}) => {
   return (
     <View>
-      <Text>Order</Text>
+      <Text>{order.name}</Text>
     </View>
   )
 }
 
-export default Order
+export default FlatListOrderProductCard
 
 const styles = StyleSheet.create({})
