@@ -1,12 +1,11 @@
 
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import back from "../../assets/image/back.jpg"
 import { colors, elevation, fonts, radius, spaces } from '../../consdants/app_consts'
 import InputWithLabel from '../../components/forms/InputWithLabel'
 import CustomButtons from '../../components/buttons/CustomButtons'
 import PasswordInputWithLabel from '../../components/forms/PasswordInputWithLabel'
-import { Link, router } from 'expo-router'
+import {router} from 'expo-router'
 
 const SignUp = () => {
   
@@ -15,7 +14,7 @@ const SignUp = () => {
 
     
   return (
-       <ImageBackground style={styles.wrapper} source={back} >
+       <View style={styles.wrapper}  >
            <View style={styles.header}>
              <Text style={styles.title}>Let's Get </Text>
              <Text style={styles.title}>Started</Text>
@@ -33,8 +32,7 @@ const SignUp = () => {
 
                 <CustomButtons buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign Up' />
            </View>
-               
-       </ImageBackground>
+       </View>
    )
  }
  
@@ -42,7 +40,7 @@ const SignUp = () => {
  
  const styles = StyleSheet.create({
       wrapper : {
-           flex:1,resizeMode:"contain"
+           flex:1,backgroundColor:colors.third
       },
       header: {
         paddingHorizontal:spaces.middle,height:"35%",justifyContent:"center",gap:spaces.small

@@ -5,7 +5,8 @@ export const colors = {
      dark_gray : "rgb(181, 171, 171)",
      normal_gray:"rgb(221, 215, 215)",
      light_gray : "rgb(237, 226, 226)",
-     secondary : "rgb(148, 138, 204)"
+     secondary : "rgb(148, 138, 204)",
+     third : "rgb(151, 159, 196)"
 }
 
 export const spaces = {
