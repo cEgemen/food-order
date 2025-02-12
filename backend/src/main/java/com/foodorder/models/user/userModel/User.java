@@ -23,6 +23,9 @@ public class User {
 
     private String password;
 
+    private String role;
+
+
 
     @Override
     public String toString() {
@@ -31,7 +34,9 @@ public class User {
             ", username='" + getUsername() + "'" +
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
+            ", role='" + getRole() + "'" +
             "}";
     }
+   
     
 }
