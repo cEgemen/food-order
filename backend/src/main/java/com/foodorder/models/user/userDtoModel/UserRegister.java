@@ -15,4 +15,6 @@ public class UserRegister {
 
     private String password ;
 
+    private String role;
+
 }
