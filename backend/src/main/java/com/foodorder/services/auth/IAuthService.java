@@ -1,12 +1,14 @@
 package com.foodorder.services.auth;
 
+import java.util.Map;
+
 import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
 
 public interface IAuthService {
     
-     String register(UserRegister user);
+     Map<String,?> register(UserRegister user);
 
-     String login(UserLogin user);
+     Map<String,?> login(UserLogin user);
 
 }

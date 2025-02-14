@@ -1,5 +1,6 @@
 package com.foodorder.services.auth;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -10,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.foodorder.base.errors.CustomException;
+import com.foodorder.base.errors.ErrorsEnum;
 import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
 import com.foodorder.models.user.userModel.User;
@@ -29,11 +32,11 @@ public class AuthService implements IAuthService {
     private JwtService jwtService;
 
     @Override
-    public String register(UserRegister user) {
+    public Map<String,?> register(UserRegister user) {
         Optional<User> result = userRepository.findByEmail(user.getEmail());
         if(result.isPresent())
         {
-          return "user already exist";
+          throw new CustomException(ErrorsEnum.USER_ALREADY_EXIST);
         }
           User newUser = new User();
           BeanUtils.copyProperties(user, newUser);
@@ -42,19 +45,19 @@ public class AuthService implements IAuthService {
           newUser.setPassword(encodingPassword);
           User resultUser =  userRepository.save(newUser);
           System.out.println("Register func -> return data from save func -> "+resultUser);
-          return "register is success";
+          return Map.of("message",user.getUsername() + " is  registered succesfuly.");
     }
 
     @Override
-    public String login(UserLogin user) {
+    public Map<String,?> login(UserLogin user) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         Authentication authentication =  authenticationManager.authenticate(token);
         if(!authentication.isAuthenticated())
         {
-           return "login is faild";
+           throw new CustomException(ErrorsEnum.USER_NOT_FOUND);
         }
         String jwtToken = jwtService.generateJWT(user.getEmail());
-        return "login is success and token : "+jwtToken;
+        return Map.of("message","login is succesful","token",jwtToken);
     }
     
 }
