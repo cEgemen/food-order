@@ -11,15 +11,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.foodorder.base.Enums.ErrorsEnum;
 import com.foodorder.base.errors.CustomException;
-import com.foodorder.base.errors.ErrorsEnum;
 import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
 import com.foodorder.models.user.userModel.User;
 import com.foodorder.repositories.UserRepository;
 import com.foodorder.services.security.JwtService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AuthService implements IAuthService {
 
     @Autowired
@@ -33,7 +36,9 @@ public class AuthService implements IAuthService {
 
     @Override
     public Map<String,?> register(UserRegister user) {
+        log.info("userRegister : "+user);
         Optional<User> result = userRepository.findByEmail(user.getEmail());
+        log.info("findByEmail : "+result);
         if(result.isPresent())
         {
           throw new CustomException(ErrorsEnum.USER_ALREADY_EXIST);

@@ -1,5 +1,6 @@
 package com.foodorder.base.errors;
 
+import com.foodorder.base.Enums.ErrorsEnum;
 
 public class CustomException extends RuntimeException {
  

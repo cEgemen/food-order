@@ -1,4 +1,4 @@
-package com.foodorder.base.errors;
+package com.foodorder.base.Enums;
 
 public enum ErrorsEnum {
      

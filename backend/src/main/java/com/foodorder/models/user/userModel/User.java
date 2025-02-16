@@ -1,43 +1,30 @@
 package com.foodorder.models.user.userModel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Entity 
+import com.foodorder.base.Enums.RolesEnum;
+
+import lombok.Data;
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor 
+@Document(collection = "Users")
 public class User {
-    
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+ 
+    @MongoId(targetType = FieldType.OBJECT_ID)
+    private String id;
 
     private String username;
 
+    @Indexed(unique = true)
     private String email;
 
     private String password;
 
+    /* @Field(targetType = FieldType.STRING)
+    private RolesEnum role; */
     private String role;
-
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", username='" + getUsername() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", role='" + getRole() + "'" +
-            "}";
-    }
-   
-    
 }
