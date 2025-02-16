@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { colors, fonts, radius, spaces } from '../consdants/app_consts';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { colors, elevation, fonts, radius, spaces } from '../consdants/app_consts';
 import { router, Stack } from 'expo-router';
 import onBoard1 from "../assets/image/onBoard1.png"
 import onBoard2 from "../assets/image/onBoard2.png"
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import SwipCircle from '../components/SwipCircle';
 
 export default function App() {
-  const onBoardPages = [{title : "Discover and Enjoy",description:"Discover the perfect meal for your taste with thousands of restaurants and delicious food options.",image:onBoard1},{title:"Easy Ordering, Fast Delivery",description:"Place your order in seconds and wait for your food to be delivered quickly to your door.",image:onBoard2},{title:"Exclusive Offers and Discounts",description:"Save more with exclusive offers and discounts from your favorite restaurants.",image:onBoard3}]
+  const onBoardPages = [{title : "Discover and Enjoy",description:"Discover the perfect meal for your taste with thousands of restaurants and delicious food options.",image:onBoard1,color:"rgb(189, 177, 117)"},{title:"Easy Ordering, Fast Delivery",description:"Place your order in seconds and wait for your food to be delivered quickly to your door.",image:onBoard2,color:"rgb(203, 159, 126)"},{title:"Exclusive Offers and Discounts",description:"Save more with exclusive offers and discounts from your favorite restaurants.",image:onBoard3,color:"rgb(151, 167, 111)"}]
   const swipperButtons = [
   {title:"Skip",press:() => {
        router.replace("/signIn")
@@ -21,7 +21,7 @@ export default function App() {
   }}]
 
   const [onBoardState,setOnBoardState] = useState(0)
-  const {title,description,image} = onBoardPages[onBoardState]
+  const {title,description,image,color} = onBoardPages[onBoardState]
   
   let rightIndex;
   let leftIndex ;
@@ -39,33 +39,42 @@ export default function App() {
   }
   
   return (
-        <View style= {styles.wrapper}>
-            <Stack.Screen options={{headerShown:false}} />
-            <View style={styles.detailsWrapper}>
+    <> 
+        <Stack.Screen options={{headerShown:false}} />
+        <View style= {[styles.wrapper,{backgroundColor:color}]}>
+           <View style={styles.detailsWrapper}>
+             <View style={[styles.afterDetailsWrapper]}>
                 <Image style={styles.image} source={image} />
                 <Text  style={styles.title}>{title}</Text>
                 <Text  style={styles.description}>{description}</Text>
             </View>
+           </View>
+           
             <View style={styles.bottomSwiperWrapper}>
                <View style={styles.bottomSwiperContainer}>
                      <Text style={styles.bottomSwipperButton} onPress={swipperButtons[leftIndex].press} >{swipperButtons[leftIndex].title}</Text>
                      <SwipCircle size={onBoardPages.length} currentIndex={onBoardState} inActiveColor={colors.light_gray} activeColor={colors.background} />
                      <Text style={styles.bottomSwipperButton} onPress={swipperButtons[rightIndex].press} >{swipperButtons[rightIndex].title}</Text>
                </View>
-            </View>
+            </View>        
         </View>
+    </>
+        
   );
 }
 
 const styles = StyleSheet.create({
       wrapper : {
-          flex:1,backgroundColor:colors.third
+          flex:1,justifyContent:"center",alignItems:"center"
       },
       detailsWrapper : {
-             justifyContent:"center",alignItems:"center",paddingHorizontal:spaces.small
+          width:"90%",height:"60%",backgroundColor:"rgba(255,255,255,.15)",borderRadius:radius.middle,
+      },
+      afterDetailsWrapper : {
+          flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"transparent",borderRadius:radius.middle
       },
       image : {
-        width:"100%",height:"50%",resizeMode:"cover",marginBottom:spaces.high
+        width:"100%",height:"50%",resizeMode:"contain",marginBottom:spaces.high
       },
       title : {
          fontSize:fonts.highSize*1.25,fontWeight:fonts.highWeight,color:colors.background,marginBottom:spaces.middle,textAlign:"center" 
