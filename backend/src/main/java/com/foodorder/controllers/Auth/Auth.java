@@ -15,8 +15,11 @@ import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
 import com.foodorder.services.auth.AuthService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/auth/")
+@Slf4j
 public class Auth extends IResponse implements IAuth{
 
     @Autowired
@@ -24,6 +27,7 @@ public class Auth extends IResponse implements IAuth{
 
     @Override @PostMapping("signUp")
     public ResponseEntity<Response> register(@RequestBody UserRegister user) {
+       log.info("user register data : "+user);
        Map<String,?> okData = authService.register(user);
        return okResponse(okData);
     }

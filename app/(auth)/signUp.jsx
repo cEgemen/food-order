@@ -6,11 +6,68 @@ import InputWithLabel from '../../components/forms/InputWithLabel'
 import CustomButtons from '../../components/buttons/CustomButtons'
 import PasswordInputWithLabel from '../../components/forms/PasswordInputWithLabel'
 import {router} from 'expo-router'
+import { BASE_URL } from '../../secrets'
+import { emailCheck,usernameCheck,passwordCheck } from '../../utils/validations'
 
 const SignUp = () => {
-  
-  const [formState , setFormState] = useState({name : "",password : "",rPassword:""})
+  const [formState , setFormState] = useState({username : "",password : "",email:""})
+  const [errors,setErrors] = useState({username:[],password:[],email:[]})  
 
+  const isReady = errors.email.length !== 0 && errors.username.length !== 0 && errors.password.length !== 0;
+
+  const onSubmit = () => {
+      if(isReady)
+      {
+          const formData = JSON.stringify({...formState,role:"ROLE_USER"})
+          console.log("formData : ",formData)
+          const url = BASE_URL + "auth/signUp"
+          console.log("url : ",url)
+          fetch(url,{
+               body:formData,
+               headers : {
+                    "Content-Type":"application/json"
+               },
+               method:"POST"
+          })
+          .then(result => {
+               return result.json()
+          })
+          .then(data => {
+               console.log("data : ",data)
+          })
+          .catch(err => {
+               console.log("err : ",err)
+          })
+      }
+  }
+
+  const valided = (mod,value) => {
+       if(mod === 1)
+       {
+          const result = usernameCheck(value)
+          setErrors(oldState => {
+                const username = result.result ? [] : Array.of(result.message)
+                return {...oldState,username};
+          })
+       }
+       else if(mod === 2)
+       {
+          const result = emailCheck(value)
+          setErrors(oldState => {
+                const email = result.result ? [] : Array.of(result.message)
+                return {...oldState,email};
+          })
+       }
+       else if(mod === 3)
+       {
+          const result = passwordCheck(value)
+          console.log("result : ",result)
+          setErrors(oldState => {
+                const password = result.result ? [] : Array.of(result.message)
+                return {...oldState,password};
+          })
+       }
+  }
 
     
   return (
@@ -21,16 +78,14 @@ const SignUp = () => {
            </View>
            <View style={styles.container}>
                 <View style={styles.inputWrapper}>
-                   <InputWithLabel label='UserName' placeholder='Jack...' value={formState.name} onChange={(text) => setFormState(oldState => {return {...oldState,name:text}})} />
-                   <PasswordInputWithLabel label='Password' placeholder='******' value={formState.password} onChange={(text) => setFormState(oldState => {return {...oldState,password:text}})} />
-                   <PasswordInputWithLabel label='Repait Password' placeholder='******' value={formState.rPassword} onChange={(text) => setFormState(oldState => {return {...oldState,rPassword:text}})} />
+                   <InputWithLabel label='UserName' placeholder='Jack...' value={formState.username} onChange={(text) => setFormState(oldState => {return {...oldState,username:text}})} errors={errors.username} endEditing={() => valided(1,formState.username)} />
+                   <InputWithLabel label='Email' placeholder='****@****' value={formState.email} onChange={(text) => setFormState(oldState => {return {...oldState,email:text}})} keyboardType="email-address" errors={errors.email} endEditing={() => valided(2,formState.email)} />
+                   <PasswordInputWithLabel label='Password' placeholder='******' value={formState.password} onChange={(text) => setFormState(oldState => {return {...oldState,password:text}})} errors={errors.password} endEditing={() => valided(3,formState.password)} />
                 </View>
-
-                 <Text style={styles.linkText}>Already have an account?
+                <Text style={styles.linkText}>Already have an account?
                         <Text onPress={() => {router.back()}} style={styles.linkSubText}> Sign In</Text>
-                 </Text>
-
-                <CustomButtons buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign Up' />
+                </Text>
+                <CustomButtons disabled={!isReady} onPress={onSubmit} buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign Up' />
            </View>
        </View>
    )
@@ -43,13 +98,13 @@ const SignUp = () => {
            flex:1,backgroundColor:colors.third
       },
       header: {
-        paddingHorizontal:spaces.middle,height:"35%",justifyContent:"center",gap:spaces.small
+        paddingHorizontal:spaces.middle,height:"30%",justifyContent:"center",gap:spaces.small
       },
       title:{
          fontSize:fonts.highSize * 1.5 ,fontWeight:fonts.highWeight,color:colors.background
       },
       container : {
-           position:"absolute",bottom:0,width:"100%",height:"65%",backgroundColor:colors.background,
+           position:"absolute",bottom:0,width:"100%",height:"70%",backgroundColor:colors.background,
            borderTopLeftRadius:radius.middle * 3, borderTopRightRadius:radius.middle * 3,elevation:elevation.middle,paddingHorizontal:spaces.middle
       },
       inputWrapper : {
