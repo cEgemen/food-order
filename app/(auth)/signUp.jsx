@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import React, { useState } from 'react'
 import { colors, elevation, fonts, radius, spaces } from '../../consdants/app_consts'
 import InputWithLabel from '../../components/forms/InputWithLabel'
@@ -11,12 +11,11 @@ import { emailCheck,usernameCheck,passwordCheck } from '../../utils/validations'
 
 const SignUp = () => {
   const [formState , setFormState] = useState({username : "",password : "",email:""})
-  const [errors,setErrors] = useState({username:[],password:[],email:[]})  
+  const [errors,setErrors] = useState({username:[],password:[],email:[],isReady:false})  
 
-  const isReady = errors.email.length !== 0 && errors.username.length !== 0 && errors.password.length !== 0;
 
   const onSubmit = () => {
-      if(isReady)
+      if(errors.isReady)
       {
           const formData = JSON.stringify({...formState,role:"ROLE_USER"})
           console.log("formData : ",formData)
@@ -34,6 +33,16 @@ const SignUp = () => {
           })
           .then(data => {
                console.log("data : ",data)
+               const {error_data , ok_data} = data;
+               if(ok_data === null)
+               {
+                    setFormState({username:"",email:"",password:""})
+                    ToastAndroid.showWithGravity("Try again that error occurred during registration.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+               }
+               else
+               {
+                 router.back()   
+               } 
           })
           .catch(err => {
                console.log("err : ",err)
@@ -46,16 +55,16 @@ const SignUp = () => {
        {
           const result = usernameCheck(value)
           setErrors(oldState => {
-                const username = result.result ? [] : Array.of(result.message)
-                return {...oldState,username};
+               const data = result.result ? {username : [],isReady:true} : {username: Array.of(result.message),isReady:false};
+               return {...oldState,...data};
           })
        }
        else if(mod === 2)
        {
           const result = emailCheck(value)
           setErrors(oldState => {
-                const email = result.result ? [] : Array.of(result.message)
-                return {...oldState,email};
+               const data = result.result ? {email : [],isReady:true} : {email: Array.of(result.message),isReady:false};
+               return {...oldState,...data};
           })
        }
        else if(mod === 3)
@@ -63,8 +72,8 @@ const SignUp = () => {
           const result = passwordCheck(value)
           console.log("result : ",result)
           setErrors(oldState => {
-                const password = result.result ? [] : Array.of(result.message)
-                return {...oldState,password};
+               const data = result.result ? {password : [],isReady:true} : {password: Array.of(result.message),isReady:false};
+               return {...oldState,...data};
           })
        }
   }
@@ -85,7 +94,7 @@ const SignUp = () => {
                 <Text style={styles.linkText}>Already have an account?
                         <Text onPress={() => {router.back()}} style={styles.linkSubText}> Sign In</Text>
                 </Text>
-                <CustomButtons disabled={!isReady} onPress={onSubmit} buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign Up' />
+                <CustomButtons disabled={!errors.isReady} onPress={onSubmit} buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign Up' />
            </View>
        </View>
    )

@@ -34,6 +34,7 @@ public class Auth extends IResponse implements IAuth{
 
     @Override @PostMapping("signIn")
     public ResponseEntity<Response> login(@RequestBody UserLogin user) {
+        log.info("user login data : "+user);
         Map<String,?> okData = authService.login(user);
         return okResponse(okData);
     }

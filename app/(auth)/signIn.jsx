@@ -1,23 +1,50 @@
 
-import {StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import {StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { colors, elevation, fonts, radius, spaces } from '../../consdants/app_consts'
 import InputWithLabel from '../../components/forms/InputWithLabel'
 import CustomButtons from '../../components/buttons/CustomButtons'
 import PasswordInputWithLabel from '../../components/forms/PasswordInputWithLabel'
 import {router } from 'expo-router'
 import { emailCheck,passwordCheck } from '../../utils/validations'
+import { BASE_URL } from '../../secrets'
+import { userContext } from '../../managment/userContext'
 
 const SignIn = () => {
-  
+  const {setUserState} = useContext(userContext)
   const [formState , setFormState] = useState({email : "",password : ""})
-  const [errors , setErrors] = useState({email:[],password:[]})
- 
-  const isReady = errors.email.length !== 0 && errors.password.length !== 0
-
+  const [errors , setErrors] = useState({email:[],password:[],isReady:false})
+  
   const onSubmit = () => {
-      if(isReady)
+      if(errors.isReady)
       {
+        const url = BASE_URL+"auth/signIn"
+        const formData = JSON.stringify({...formState})
+        fetch(url,{
+            method:"POST",
+            body:formData,
+            headers:{
+               "Content-Type":"application/json"
+            }
+        }).then(result => {
+            return result.json()
+        }).then(data => {
+            const {error_data,ok_data} = data;
+            if(error_data !== null)
+            {
+                setFormState({email:"",password:""})
+                ToastAndroid.showWithGravity("Try again that the error occurred during logging.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+            }
+            else 
+            {
+                const {token} = ok_data
+                setUserState({...formState,token})
+                router.replace("/(tabs)/")
+            }
+            console.log("signIn data : ",data)
+        }).catch(err => {
+            console.log("err : ",err)
+        })           
 
       }
   }
@@ -27,16 +54,16 @@ const SignIn = () => {
        {
           const result = emailCheck(value);
           setErrors(oldState => {
-                const email = result.result ? [] : Array.of(result.message);
-                return {...oldState,email};
+                const data = result.result ? {email : [],isReady:true} : {email: Array.of(result.message),isReady:false};
+                return {...oldState,...data};
           })
        }
        else if(mod === 2) 
        {
            const result = passwordCheck(value);
            setErrors(oldState => {
-                const password = result.result ? [] : Array.of(result.message)
-                return {...oldState,password}
+               const data = result.result ? {password : [],isReady:true} : {password: Array.of(result.message),isReady:false};
+                return {...oldState,...data};
            })
        } 
   }
@@ -59,7 +86,7 @@ const SignIn = () => {
                         <Text onPress={() => {router.push("/signUp")}} style={styles.linkSubText}> Sign Up</Text>
                    </Text>
 
-                <CustomButtons disabled={!isReady} onPress={onSubmit} buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign In' />
+                <CustomButtons disabled={!(errors.isReady)} onPress={onSubmit} buttonStyle={styles.button} labelStyle={{color:colors.background}} label='Sign In' />
            </View>
        </View>
    )

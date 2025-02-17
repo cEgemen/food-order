@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
 import ProductContextProvider from '../managment/productContext'
+import UserContextProvider from "../managment/userContext"
 
 const AppLayout = () => {
   return (
+ <UserContextProvider>
   <ProductContextProvider>
    <Stack screenOptions={{
        
@@ -33,8 +34,8 @@ const AppLayout = () => {
         />
 
    </Stack>
-  </ProductContextProvider> 
-   
+  </ProductContextProvider>   
+ </UserContextProvider>    
   )
 }
 
