@@ -33,17 +33,20 @@ const SignIn = () => {
             if(error_data !== null)
             {
                 setFormState({email:"",password:""})
+                setErrors(oldState => {
+                     return {...oldState,isReady:false}
+                })
                 ToastAndroid.showWithGravity("Try again that the error occurred during logging.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
             }
             else 
             {
-                const {token} = ok_data
-                setUserState({...formState,token})
-                router.replace("/(tabs)/")
+                const {token,role,username} = ok_data
+                const userRole = role.split("_")[1];
+                setUserState({...formState,token,username,role:userRole})
+                router.replace("/(tabs)/menu/products")
             }
-            console.log("signIn data : ",data)
         }).catch(err => {
-            console.log("err : ",err)
+                console.log("err : ",err)
         })           
 
       }

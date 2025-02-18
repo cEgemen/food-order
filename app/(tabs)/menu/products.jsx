@@ -1,17 +1,19 @@
 
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import React, { useContext } from 'react'
 import products from '../../../assets/datas/products'
 import FlatListCard from '../../../components/cards/FlatListCard'
 import { router } from 'expo-router'
 import { colors, spaces } from '../../../consdants/app_consts'
 import * as Crypto from "expo-crypto"
+import { userContext } from '../../../managment/userContext'
 
 export default function Products() {
-
+  const {userState : {role}} = useContext(userContext)
+  const isAdmin = role === "ADMIN"
   const onPress = (id) => {
-       router.push("/menu/"+id)
-  }
+     router.push({pathname:"/menu/"+id,params:{mod:isAdmin ? 1 : 2}})
+  }  
 
   return (
    <View  style={styles.wrapper}>

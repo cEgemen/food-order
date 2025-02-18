@@ -37,6 +37,9 @@ const SignUp = () => {
                if(ok_data === null)
                {
                     setFormState({username:"",email:"",password:""})
+                    setErrors(oldState => {
+                         return {...oldState,isReady:false}
+                    })
                     ToastAndroid.showWithGravity("Try again that error occurred during registration.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
                }
                else

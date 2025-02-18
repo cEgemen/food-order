@@ -7,7 +7,7 @@ import cEyeIcon from "../../assets/icons/close_eye.png"
 import InputWithLabel from './InputWithLabel'
 import { colors, spaces } from '../../consdants/app_consts'
 
-const PasswordInputWithLabel = ({label="",placeholder="",value="",onChange=(text) => {},endEditing=() => {},containerStyle={},labelStyle={},inputStyle={},errors=[],keyboardType="default"}) => {
+const PasswordInputWithLabel = ({label="",placeholder="",value="",onChange=(text) => {},endEditing=() => {},containerStyle={},labelStyle={},inputStyle={},errors=[],keyboardType="numeric"}) => {
   const [securState , setSecurState] = useState(true)
   const onChangeSecur = () => {
        setSecurState(oldState => {

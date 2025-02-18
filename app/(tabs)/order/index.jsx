@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import orders from '../../../assets/datas/orders'
 import * as Crypto from "expo-crypto"
 import { colors, spaces } from '../../../consdants/app_consts'

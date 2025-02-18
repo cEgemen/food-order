@@ -7,12 +7,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 public class UserPrinciple implements UserDetails {
 
     private User user;
 
     public UserPrinciple(User user){
          this.user = user;
+    }
+
+    public User getUser() {
+       return this.user;
     }
 
     @Override

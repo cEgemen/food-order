@@ -1,13 +1,20 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { router, Stack } from 'expo-router'
 import StackPressableIcon from '../../../components/buttons/StackPressableIcon'
 import lunchIcon from "../../../assets/icons/lunch.png"
+import addIcon from "../../../assets/icons/add.png"
+import { userContext } from '../../../managment/userContext'
+
 
 export default function _layout() {
+  
+  const {userState:{role}} = useContext(userContext)
+  console.log("role : ",role)
+  const isAdmin = role === "ADMIN"; 
 
   const onPress = () => {
-        router.push("/card")
+     isAdmin ? router.push({pathname:"/createAndUpdate",params:{id:null}}) : router.push("/card") 
   }
 
   return (
@@ -19,7 +26,12 @@ export default function _layout() {
                    headerTitleAlign:"center",
                    headerRight:() => {
                        return <>
-                                  <StackPressableIcon icon={lunchIcon} onPress={onPress} />
+                                  { 
+                                     role === "ADMIN" ?
+                                      <StackPressableIcon icon={addIcon} onPress={onPress} />
+                                                      :
+                                      <StackPressableIcon icon={lunchIcon} onPress={onPress} />                
+                                     }
                               </>
                    }
               }}
