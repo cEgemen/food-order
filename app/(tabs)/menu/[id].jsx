@@ -67,6 +67,7 @@ const ProductDetail = () => {
          options={{
              title : product.name,
              headerTitleAlign:"center",
+             headerShadowVisible:false,
              headerRight:mod === 1 ? () => {
                 return <>
                          <StackPressableIcon icon={editIcon} onPress={goToEditPage}  />

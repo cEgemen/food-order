@@ -10,7 +10,6 @@ import { userContext } from '../../../managment/userContext'
 export default function _layout() {
   
   const {userState:{role}} = useContext(userContext)
-  console.log("role : ",role)
   const isAdmin = role === "ADMIN"; 
 
   const onPress = () => {
