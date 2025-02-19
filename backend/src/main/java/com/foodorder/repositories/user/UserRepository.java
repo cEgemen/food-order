@@ -1,4 +1,4 @@
-package com.foodorder.repositories;
+package com.foodorder.repositories.user;
 
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;

@@ -1,4 +1,4 @@
-package com.foodorder.controllers.Auth;
+package com.foodorder.controllers.auth;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/auth/")
 @Slf4j
-public class Auth extends IResponse implements IAuth{
+public class AuthController extends IResponse implements IAuthController{
 
     @Autowired
     private AuthService authService;

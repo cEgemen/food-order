@@ -3,14 +3,11 @@ package com.foodorder.services.auth;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.management.relation.Role;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +17,7 @@ import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
 import com.foodorder.models.user.userModel.User;
 import com.foodorder.models.user.userModel.UserPrinciple;
-import com.foodorder.repositories.UserRepository;
+import com.foodorder.repositories.user.UserRepository;
 import com.foodorder.services.security.JwtService;
 
 import lombok.extern.slf4j.Slf4j;

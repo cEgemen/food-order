@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.foodorder.models.user.userModel.User;
 import com.foodorder.models.user.userModel.UserPrinciple;
-import com.foodorder.repositories.UserRepository;
+import com.foodorder.repositories.user.UserRepository;
 
 @Component
 public class SecurityUserDetailsService implements UserDetailsService {
