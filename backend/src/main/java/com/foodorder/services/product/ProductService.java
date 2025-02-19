@@ -46,7 +46,7 @@ public class ProductService implements IProductService {
         {
             throw new CustomException(ErrorsEnum.PRODUCT_NOT_FOUND);
         }
-        BeanUtils.copyProperties(result,dtoProduct);
+        BeanUtils.copyProperties(result.get(),dtoProduct);
         log.info("get product("+productId+")");                           
         return Map.of("message","product getted success.","product",dtoProduct);
     }

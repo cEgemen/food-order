@@ -1,7 +1,6 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { router, Stack, useLocalSearchParams } from 'expo-router'
-import products from '../../../assets/datas/products'
 import editIcon from "../../../assets/icons/edit.png"
 import CustomButtons from '../../../components/buttons/CustomButtons'
 import { colors, elevation, fonts, radius, spaces } from '../../../consdants/app_consts'
@@ -9,13 +8,41 @@ import { productSizes, productSizesRatio } from '../../../consdants/productconst
 import { productContext } from '../../../managment/productContext'
 import * as Crypto from "expo-crypto"
 import StackPressableIcon from '../../../components/buttons/StackPressableIcon'
+import { BASE_URL } from '../../../secrets'
 
 const ProductDetail = () => {
   const {addProduct} = useContext(productContext)
+  const [product,setProduct] = useState({})
+  const [isLoading , setIsLoading] = useState(true)
   const [selectIndex,setSelectIndex] = useState(0)
   const {id,mod} = useLocalSearchParams()
 
-  let product = products.find((value,index) => value.id === parseInt(id))
+  useEffect(() => { 
+           const getProduct = async () => {
+                  fetch(BASE_URL+"product/"+id,{
+                      method:"GET",
+                      headers:{
+                        "Content-Type":"application/json"
+                      }
+                  }).then(res => res.json())
+                    .then(data => {
+                          const {ok_data} = data;
+                          if(ok_data !== null)
+                          { 
+                             setProduct(ok_data.product)
+                             setIsLoading(false) 
+                          }
+                          else {
+                        ToastAndroid.showWithGravity("The error occurred during fetcing product.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+                          }
+                    })
+                    .catch(err => {
+                        console.log("err : ",err)
+                    })
+           }
+
+           getProduct()
+  },[])
   
   const selectOnPress = (index) => {
        setSelectIndex(index)
@@ -33,6 +60,15 @@ const ProductDetail = () => {
   const onDelete = () => {
     
   }
+
+  if(isLoading) return  <>
+                         <Stack.Screen options={{
+                                 headerShown:false
+                         }} />
+                         <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                            <ActivityIndicator size={'large'} color={colors.secondary} />
+                         </View>  
+                        </>
 
   let content = mod === 1 ? 
                 <>
@@ -76,10 +112,11 @@ const ProductDetail = () => {
          }}
       />
 
-      <View style={styles.wrapper}>
+       <View style={styles.wrapper}>
        <Image style={styles.image} source={{uri : product.image}} />
        {content}
-    </View>
+       </View>
+      
     </>
    
   )

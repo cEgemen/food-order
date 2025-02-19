@@ -1,23 +1,50 @@
 
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { colors, fonts, spaces } from '../consdants/app_consts'
 import emptyPizza from "../assets/image/emptyPizza.png"
 import InputWithLabel from '../components/forms/InputWithLabel'
 import CustomButtons from '../components/buttons/CustomButtons'
 import { Stack, useLocalSearchParams } from 'expo-router'
-import products from '../assets/datas/products'
 import { productNameCheck,priceCheck} from '../utils/validations'
+import { BASE_URL } from '../secrets'
 
 const CreateAndUpdate = () => {
   const {id} = useLocalSearchParams()
-  let product = {name:"",price:"",image:""}
   
-  id  && (product = products.find((value,index) => value.id === parseInt(id)))
-  
-  const [formState , setFormState] = useState({...product})
-  
+  const [formState , setFormState] = useState({name:"",price:"",image:""})
+  const [isLoading , setIsLoading] = useState(true)
   const [errorData , setErrorData] = useState({name : [],price : [],isReady:false})
+
+  useEffect(() => {
+        if(id)
+        {
+             const getProduct = async () => {
+                   fetch(BASE_URL+"product/"+id,{
+                       method:"GET",
+                       headers:{
+                            "Content-Type":"application/json"
+                       }
+                   }).then(res => res.json())
+                     .then(data => {
+                          const {ok_data} = data;
+                                                   if(ok_data !== null)
+                                                   { 
+                                                      setFormState(ok_data.product)
+                                                      setIsLoading(false) 
+                                                   }
+                                                   else {
+                                 ToastAndroid.showWithGravity("The error occurred during fetcing product.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+                                                   }
+                     })
+                     .catch(err => {
+                         console.log("err : ",err)
+                     })
+             }    
+             
+             getProduct()
+        }
+  },[])
 
   const onUpdate = () => {
 
@@ -45,6 +72,15 @@ const CreateAndUpdate = () => {
             })
           }
   }
+
+   if(isLoading) return  <>
+                            <Stack.Screen options={{
+                                   headerShown:false
+                            }} />
+                            <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                              <ActivityIndicator size={'large'} color={colors.secondary} />
+                            </View>  
+                         </>
 
   return (
       <>

@@ -7,7 +7,7 @@ import com.foodorder.models.product.productDTOModel.IUDTOProduct;
 
 public interface IProductController {
 
-    ResponseEntity<Response> getAllProduct();
+    ResponseEntity<Response> getAllProducts();
 
     ResponseEntity<Response> getProduct(String id);
 

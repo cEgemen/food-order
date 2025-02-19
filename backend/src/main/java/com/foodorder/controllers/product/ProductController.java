@@ -27,7 +27,7 @@ public class ProductController extends IResponse  implements IProductController 
 
     @Override
     @GetMapping("allProducts")
-    public ResponseEntity<Response> getAllProduct() {
+    public ResponseEntity<Response> getAllProducts() {
         Map<String,?> result = service.getAllProduct();
         return okResponse(result);
     }
@@ -35,8 +35,8 @@ public class ProductController extends IResponse  implements IProductController 
     @Override
     @GetMapping("{id}")
     public ResponseEntity<Response> getProduct(@PathVariable String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getByIdProduct'");
+        Map<String,?> okData = service.getProduct(id);
+        return okResponse(okData);
     }
 
     @Override

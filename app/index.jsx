@@ -1,5 +1,5 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { colors, elevation, fonts, radius, spaces } from '../consdants/app_consts';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { colors,fonts, radius, spaces } from '../consdants/app_consts';
 import { router, Stack } from 'expo-router';
 import onBoard1 from "../assets/image/onBoard1.png"
 import onBoard2 from "../assets/image/onBoard2.png"
