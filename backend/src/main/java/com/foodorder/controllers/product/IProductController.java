@@ -9,6 +9,8 @@ public interface IProductController {
 
     ResponseEntity<Response> getAllProduct();
 
+    ResponseEntity<Response> getProduct(String id);
+
     ResponseEntity<Response> addProduct(IUDTOProduct product);
     
     ResponseEntity<Response> updateProduct(String id,IUDTOProduct product);

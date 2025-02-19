@@ -3,11 +3,14 @@ package com.foodorder.services.product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foodorder.base.Enums.ErrorsEnum;
+import com.foodorder.base.errors.CustomException;
 import com.foodorder.models.product.productDTOModel.DTOProduct;
 import com.foodorder.models.product.productDTOModel.IUDTOProduct;
 import com.foodorder.models.product.productModel.Product;
@@ -33,6 +36,19 @@ public class ProductService implements IProductService {
              dtoProductList.add(dtoProduct);
         }
         return Map.of("message","fetching is success.","products",dtoProductList);
+    }
+
+    @Override
+    public Map<String, ?> getProduct(String productId) {
+        DTOProduct dtoProduct = new DTOProduct();
+        Optional<Product> result = repository.findById(productId);
+        if(!result.isPresent())
+        {
+            throw new CustomException(ErrorsEnum.PRODUCT_NOT_FOUND);
+        }
+        BeanUtils.copyProperties(result,dtoProduct);
+        log.info("get product("+productId+")");                           
+        return Map.of("message","product getted success.","product",dtoProduct);
     }
 
     @Override

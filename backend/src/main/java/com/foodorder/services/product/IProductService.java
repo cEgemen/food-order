@@ -8,6 +8,8 @@ public interface IProductService {
     
      Map<String,?> getAllProduct();
 
+     Map<String,?> getProduct(String productId);
+
      Map<String,?> addProduct(IUDTOProduct product);
 
      Map<String,?> updateProduct(String productId,IUDTOProduct product);
