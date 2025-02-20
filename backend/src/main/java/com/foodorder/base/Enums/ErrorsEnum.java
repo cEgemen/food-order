@@ -2,7 +2,7 @@ package com.foodorder.base.Enums;
 
 public enum ErrorsEnum {
      
-    USER_NOT_FOUND("User not found !",404),PRODUCT_NOT_FOUND("Product not found !",404),USER_ALREADY_EXIST("User already exist !",409);
+    USER_NOT_FOUND("User not found !",404),PRODUCT_NOT_FOUND("Product not found !",404),ORDER_NOT_FOUND("Order not found !",404),USER_ALREADY_EXIST("User already exist !",409);
   
     private  String message; 
     private  int statusCode;

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.foodorder.base.errors.CustomException;
-import com.foodorder.base.response.IResponse;
+import com.foodorder.base.response.BaseController;
 import com.foodorder.base.response.Response;
 
 @ControllerAdvice
-public class GlobalExceptionHandler  extends IResponse {
+public class GlobalExceptionHandler  extends BaseController {
     
      @ExceptionHandler(MethodArgumentNotValidException.class)
       public ResponseEntity<Response> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception)

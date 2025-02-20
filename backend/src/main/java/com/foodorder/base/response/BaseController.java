@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public abstract class IResponse {
+public abstract class BaseController {
     
     public  ResponseEntity<Response> okResponse(int statusCode, Map<String, ?> data) {
          Response resData = new Response(statusCode, data, null);  

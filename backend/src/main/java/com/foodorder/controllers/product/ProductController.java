@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.foodorder.base.response.IResponse;
+import com.foodorder.base.response.BaseController;
 import com.foodorder.base.response.Response;
 import com.foodorder.models.product.productDTOModel.IUDTOProduct;
 import com.foodorder.services.product.ProductService;
 
 @RestController
 @RequestMapping("/api/product/")
-public class ProductController extends IResponse  implements IProductController {
+public class ProductController extends BaseController  implements IProductController {
 
     @Autowired
     private ProductService service;

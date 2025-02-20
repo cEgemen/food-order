@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.foodorder.base.response.IResponse;
+import com.foodorder.base.response.BaseController;
 import com.foodorder.base.response.Response;
 import com.foodorder.models.user.userDtoModel.UserLogin;
 import com.foodorder.models.user.userDtoModel.UserRegister;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/auth/")
 @Slf4j
-public class AuthController extends IResponse implements IAuthController{
+public class AuthController extends BaseController implements IAuthController{
 
     @Autowired
     private AuthService authService;
