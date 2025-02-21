@@ -9,7 +9,7 @@ import { userContext } from '../../../managment/userContext'
 import {BASE_URL} from "../../../secrets"
 
 export default function Products() {
-  const {userState : {role}} = useContext(userContext)
+  const {userState : {role,token}} = useContext(userContext)
   const [productState , setProductState] = useState([])
   const [isLoading , setIsLoading] = useState(true)
   const isAdmin = role === "ADMIN"
@@ -22,7 +22,8 @@ export default function Products() {
               fetch(BASE_URL+"product/allProducts",{
                   method:"GET",
                   headers :{
-                   "Content-Type":"application/json"
+                   "Content-Type":"application/json",
+                   "Authorization":"Bearer "+token
                   }    
               }).then(res => res.json())
                 .then(data => {

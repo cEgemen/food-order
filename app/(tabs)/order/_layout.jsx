@@ -11,7 +11,6 @@ const OrderLayout = () => {
                      options={{
                          headerTitle:"Orders",
                          headerTitleAlign:"center",
-                         headerShadowVisible:false
                      }}
                   />
              </Stack>

@@ -4,8 +4,7 @@ import React from 'react'
 import { colors, fonts, radius, spaces } from '../../consdants/app_consts'
 
 const FlatListOrderProductCard = ({product}) => {
-    const {quantity , size} = product
-    const {id,name,image,price} = product.products
+  const {quantity , size,id,name,image,price} = product
   return (
     <View style={styles.wrapper}>
        <Image style={styles.image} source={{uri:image}}  />

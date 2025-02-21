@@ -18,10 +18,12 @@ import com.foodorder.models.orders.orderDTOModel.IUDTOOrder;
 import com.foodorder.services.order.OrderService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/order/")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController extends BaseController implements IOrderController {
 
     private final OrderService service;
@@ -35,14 +37,23 @@ public class OrderController extends BaseController implements IOrderController 
 
     @Override
     @GetMapping("{id}")
-    public ResponseEntity<Response> getOrder(@PathVariable String orderId) {
-        Map<String,?> okData = service.getOrder(orderId);
+    public ResponseEntity<Response> getOrder(@PathVariable String id) {
+        Map<String,?> okData = service.getOrder(id);
         return okResponse(okData);
     }
 
     @Override
+    @GetMapping("user/{id}")
+    public ResponseEntity<Response> getOrders(@PathVariable String id) {
+        log.info("api/order/user path");
+        Map<String,?> okData = service.getOrders(id);
+        return okResponse(okData);
+    }  
+
+    @Override
     @PostMapping("addOrder")
     public ResponseEntity<Response> addOrder(@RequestBody IUDTOOrder order) {
+        log.info("order : "+order);
         Map<String,?> okData = service.addOrder(order);
         return okResponse(okData);
     }
@@ -60,7 +71,5 @@ public class OrderController extends BaseController implements IOrderController 
         Map<String,?> okData = service.deleteOrder(orderId);
         return okResponse(okData);
     }
-
-  
     
 }

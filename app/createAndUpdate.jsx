@@ -1,6 +1,6 @@
 
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { colors, fonts, spaces } from '../consdants/app_consts'
 import emptyPizza from "../assets/image/emptyPizza.png"
 import InputWithLabel from '../components/forms/InputWithLabel'
@@ -8,10 +8,11 @@ import CustomButtons from '../components/buttons/CustomButtons'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { productNameCheck,priceCheck} from '../utils/validations'
 import { BASE_URL } from '../secrets'
+import { userContext } from '../managment/userContext'
 
 const CreateAndUpdate = () => {
   const {id} = useLocalSearchParams()
-  
+  const {userState:{token}} = useContext(userContext)
   const [formState , setFormState] = useState({name:"",price:"",image:""})
   const [isLoading , setIsLoading] = useState(true)
   const [errorData , setErrorData] = useState({name : [],price : [],isReady:false})
@@ -23,7 +24,8 @@ const CreateAndUpdate = () => {
                    fetch(BASE_URL+"product/"+id,{
                        method:"GET",
                        headers:{
-                            "Content-Type":"application/json"
+                            "Content-Type":"application/json",
+                            "Authorization":"Bearer "+token
                        }
                    }).then(res => res.json())
                      .then(data => {

@@ -16,12 +16,13 @@ const AppLayout = () => {
              options={{
                 headerShown:false
              }}
-      />
+      />  
 
       <Stack.Screen 
              name='card'
              options={{
                   title:"Card",
+                  headerTitleAlign:"center",
                   presentation:"modal"
              }}
       />

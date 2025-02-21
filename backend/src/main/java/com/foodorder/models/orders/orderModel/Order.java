@@ -6,13 +6,9 @@ import java.util.List;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-
-import com.foodorder.models.user.userModel.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +18,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
-@Document("Orders")
+@Document(collection = "Orders")
 public class Order {
 
    @MongoId(targetType = FieldType.OBJECT_ID)
@@ -38,9 +34,8 @@ public class Order {
    @LastModifiedDate
    private Instant updateDate;
    
-   @DBRef
    @Indexed
-   private User order_owner;
+   private String order_owner;
 
    private List<OrderItem> order_items;
 }

@@ -12,7 +12,7 @@ const FlatListOrderCard = ({order,onPress,cardStyle={}}) => {
     return (
     <Pressable style={[styles.wrapper,cardStyle]} onPress={onPress}>
         <View style={styles.detailsWrapper}>
-            <Text style={styles.topDetailsText}>🔪 Order #{order.id}</Text>
+            <Text style={styles.topDetailsText}>🔪 Order #{order.id.substring(0,20)}...</Text>
             <Text style={styles.topDetailsText}>{order.status}</Text>
         </View>
         <View style={styles.detailsWrapper}>

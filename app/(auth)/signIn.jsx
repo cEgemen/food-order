@@ -40,9 +40,9 @@ const SignIn = () => {
             }
             else 
             {
-                const {token,role,username} = ok_data
+                const {token,role,username,id} = ok_data
                 const userRole = role.split("_")[1];
-                setUserState({...formState,token,username,role:userRole})
+                setUserState({...formState,token,username,role:userRole,id})
                 router.replace("/(tabs)/menu/products")
             }
         }).catch(err => {
@@ -51,7 +51,7 @@ const SignIn = () => {
 
       }
   }
-
+ 
   const validation = (mod,value) => {
        if(mod === 1)
        {

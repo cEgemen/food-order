@@ -14,8 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DTOOrder {
+
+   private String id;
     
-  private float total;
+   private float total;
 
    private String status;
    

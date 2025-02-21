@@ -9,6 +9,8 @@ public interface IOrderService {
 
     Map<String,?> getOrder(String orderId);
 
+    Map<String,?> getOrders(String id);
+
     Map<String,?> addOrder(IUDTOOrder order);
 
     Map<String,?> updateOrder(String orderId,IUDTOOrder order);

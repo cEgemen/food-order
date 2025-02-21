@@ -9,9 +9,11 @@ import { productContext } from '../../../managment/productContext'
 import * as Crypto from "expo-crypto"
 import StackPressableIcon from '../../../components/buttons/StackPressableIcon'
 import { BASE_URL } from '../../../secrets'
+import { userContext } from '../../../managment/userContext'
 
 const ProductDetail = () => {
   const {addProduct} = useContext(productContext)
+  const {userState:{token}} = useContext(userContext)
   const [product,setProduct] = useState({})
   const [isLoading , setIsLoading] = useState(true)
   const [selectIndex,setSelectIndex] = useState(0)
@@ -22,7 +24,8 @@ const ProductDetail = () => {
                   fetch(BASE_URL+"product/"+id,{
                       method:"GET",
                       headers:{
-                        "Content-Type":"application/json"
+                        "Content-Type":"application/json",
+                        "Authorization":"Bearer "+token
                       }
                   }).then(res => res.json())
                     .then(data => {
@@ -33,7 +36,7 @@ const ProductDetail = () => {
                              setIsLoading(false) 
                           }
                           else {
-                        ToastAndroid.showWithGravity("The error occurred during fetcing product.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+                            ToastAndroid.showWithGravity("The error occurred during fetcing product.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
                           }
                     })
                     .catch(err => {
@@ -70,7 +73,7 @@ const ProductDetail = () => {
                          </View>  
                         </>
 
-  let content = mod === 1 ? 
+  let content = parseInt(mod) === 2 ? 
                 <>
        <Text style={styles.text} numberOfLines={1}>Select Size</Text>
        <View style={styles.sliderWrapper}>
@@ -88,7 +91,7 @@ const ProductDetail = () => {
                 </>  :
                 <>
        <View style={styles.detailsWrapper2}>
-        <Text style={styles.text}> {product.name}  </Text>
+        <Text style={styles.text}> {product.name} </Text>
         <Text style={[styles.text,{color:colors.secondary}]}>$ {(product.price).toFixed(2)}</Text> 
        </View> 
        <View style={styles.buttonsWrapper}>
@@ -104,7 +107,8 @@ const ProductDetail = () => {
              title : product.name,
              headerTitleAlign:"center",
              headerShadowVisible:false,
-             headerRight:mod === 1 ? () => {
+             headerShown:true,
+             headerRight: parseInt(mod) === 1 ? () => {
                 return <>
                          <StackPressableIcon icon={editIcon} onPress={goToEditPage}  />
                        </>

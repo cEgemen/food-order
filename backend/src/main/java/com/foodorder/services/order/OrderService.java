@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.foodorder.base.Enums.ErrorsEnum;
 import com.foodorder.base.errors.CustomException;
 import com.foodorder.models.orders.orderDTOModel.DTOOrder;
 import com.foodorder.models.orders.orderDTOModel.IUDTOOrder;
 import com.foodorder.models.orders.orderModel.Order;
+import com.foodorder.models.user.userModel.User;
+import com.foodorder.models.user.userModel.UserPrinciple;
 import com.foodorder.repositories.order.OrderRepository;
+import com.foodorder.repositories.user.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class OrderService implements IOrderService {
 
     private final OrderRepository repository;
+
+    private final UserRepository userRepository;
 
     @Override
     public Map<String, ?> getAllOrders() {
@@ -42,15 +49,41 @@ public class OrderService implements IOrderService {
        }
        DTOOrder dtoOrder = new DTOOrder();
        BeanUtils.copyProperties(result.get(),dtoOrder);
-       return Map.of("message","fetching order is success.","orders",dtoOrder);
+       return Map.of("message","fetching order is success.","order",dtoOrder);
+    }
+
+    @Override
+    public Map<String, ?> getOrders(String id) {
+      List<DTOOrder> resultDtoOrders = new ArrayList<>();
+      List<Order> result = repository.findByOrderOwner(id);
+      Optional<User> resUser = userRepository.findById(id);
+      if(!resUser.isPresent())
+      {
+          throw new CustomException(ErrorsEnum.USER_NOT_FOUND);
+      }
+      else
+      {
+         User owner = resUser.get();
+         System.out.println("result : "+result);
+         for(Order order : result)
+          { 
+           DTOOrder newDtoOrder = new DTOOrder();
+           BeanUtils.copyProperties(order,newDtoOrder);
+           newDtoOrder.setOrder_owner(owner);
+           resultDtoOrders.add(newDtoOrder);
+          }
+      }
+       return Map.of("message","fetching order is success.","orders",resultDtoOrders);
     }
 
     @Override
     public Map<String, ?> addOrder(IUDTOOrder order) {
        Order newOrder = new Order();
+       User authUser = ((UserPrinciple)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
        BeanUtils.copyProperties(order,newOrder); 
-       repository.save(newOrder);
-       return Map.of("message","order added successful.");
+       newOrder.setOrder_owner(authUser.getId());
+       Order retOrder = repository.save(newOrder);
+       return Map.of("message","order added successful.","order_id",retOrder.getId());
     }
 
     @Override
@@ -58,9 +91,7 @@ public class OrderService implements IOrderService {
         Order updateOrder = new Order()
                                 .setId(orderId)
                                 .setTotal(order.getTotal())
-                                .setStatus(order.getStatus())
-                                .setOrder_owner(order.getOrder_owner())
-                                .setOrder_items(order.getOrder_items());
+                                .setStatus(order.getStatus());
         repository.save(updateOrder);                        
         return Map.of("message","order updated successful.");
     }

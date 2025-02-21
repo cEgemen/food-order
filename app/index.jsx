@@ -12,13 +12,15 @@ export default function App() {
   const swipperButtons = [
   {title:"Skip",press:() => {
        router.replace("/signIn")
+       /* router.replace("/(tabs)/menu/products") */
   }},{title : "Previous",press : () => {
         setOnBoardState(onBoardState - 1)
   }},{title:"Next",press:()=>{
         setOnBoardState(onBoardState + 1)     
   }},{title:"Done",press:()=> {
-         router.replace("/signIn")
-  }}]
+       router.replace("/signIn")
+/*        router.replace("/(tabs)/menu/products")
+ */  }}]
 
   const [onBoardState,setOnBoardState] = useState(0)
   const {title,description,image,color} = onBoardPages[onBoardState]
