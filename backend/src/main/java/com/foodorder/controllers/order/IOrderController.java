@@ -15,7 +15,7 @@ public interface IOrderController {
 
     ResponseEntity<Response> addOrder(IUDTOOrder order);
 
-    ResponseEntity<Response> updateOrder(String orderId,IUDTOOrder order);
+    ResponseEntity<Response> updateOrder(String id,IUDTOOrder order);
 
     ResponseEntity<Response> deleteOrder(String orderId);
 }

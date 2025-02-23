@@ -8,11 +8,13 @@ import com.foodorder.models.user.userModel.User;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class DTOOrder {
 
    private String id;

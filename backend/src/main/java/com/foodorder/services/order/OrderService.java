@@ -33,8 +33,15 @@ public class OrderService implements IOrderService {
        List<DTOOrder> dtoOrders = new ArrayList<>();
        for(Order order : orders)
        {
+           System.out.println("order : "+order);
+           Optional<User> resUser = userRepository.findById(order.getOrder_owner());
+           if(!resUser.isPresent())
+           {
+             throw new CustomException(ErrorsEnum.USER_NOT_FOUND);
+           }
            DTOOrder dtoOrder = new DTOOrder();
            BeanUtils.copyProperties(order, dtoOrder);
+           dtoOrder.setOrder_owner(resUser.get());
            dtoOrders.add(dtoOrder);
        }
        return Map.of("message","all fetching orders is success.","orders",dtoOrders);
@@ -48,7 +55,13 @@ public class OrderService implements IOrderService {
           throw new CustomException(ErrorsEnum.ORDER_NOT_FOUND);
        }
        DTOOrder dtoOrder = new DTOOrder();
+       Optional<User> resUser = userRepository.findById(result.get().getOrder_owner());
+       if(!resUser.isPresent())
+       {
+         throw new CustomException(ErrorsEnum.USER_NOT_FOUND);
+       }
        BeanUtils.copyProperties(result.get(),dtoOrder);
+       dtoOrder.setOrder_owner(resUser.get());
        return Map.of("message","fetching order is success.","order",dtoOrder);
     }
 
@@ -88,12 +101,27 @@ public class OrderService implements IOrderService {
 
     @Override
     public Map<String, ?> updateOrder(String orderId, IUDTOOrder order) {
+        User authUser = (User)((UserPrinciple)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        Optional<Order> resOrder = repository.findById(orderId);
+        if(!resOrder.isPresent())
+        {
+            throw new CustomException(ErrorsEnum.ORDER_NOT_FOUND);
+        }
         Order updateOrder = new Order()
                                 .setId(orderId)
                                 .setTotal(order.getTotal())
-                                .setStatus(order.getStatus());
-        repository.save(updateOrder);                        
-        return Map.of("message","order updated successful.");
+                                .setStatus(order.getStatus())
+                                .setOrder_items(order.getOrder_items())
+                                .setOrder_owner(authUser.getId())
+                                .setCreateDate(resOrder.get().getCreateDate());
+        Order resUpdateOrder = repository.save(updateOrder);                 
+        DTOOrder dtoOrder = new DTOOrder()
+                                        .setId(orderId)
+                                        .setOrder_items(resUpdateOrder.getOrder_items())
+                                        .setOrder_owner(authUser)
+                                        .setStatus(resUpdateOrder.getStatus())
+                                        .setTotal(resUpdateOrder.getTotal());            
+        return Map.of("message","order updated successful.","order",dtoOrder);
     }
 
     @Override

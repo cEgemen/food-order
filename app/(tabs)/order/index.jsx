@@ -8,33 +8,39 @@ import { userContext } from '../../../managment/userContext'
 import { BASE_URL } from '../../../secrets'
 
 const Orders = () => {
-    const {userState:{id,token}} = useContext(userContext) 
+    const {userState:{id,token,role}} = useContext(userContext)
+    const mod = role === "ADMIN" ? 1 : 2;  
     const [isLoading,setIsLoading] = useState(true)
     const [orders,setOrders] = useState(null)
    
     useEffect(() => {
-           fetch(BASE_URL+"order/user/"+id,{
-                method:"GET",
-                headers:{
-                   "Content-Type":"application/json",
-                   "Authorization":"Bearer "+token
-                }
-           }).then(res => res.json())
-             .then(data => {
-                         const {ok_data} = data
-                         if(ok_data === null)
-                         {
-                           ToastAndroid.showWithGravity("The error occurred during fetcing product.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
-                         }
-                         else {
-                            const {orders} = ok_data;
-                            setIsLoading(false)
-                            setOrders(orders)
-                         }
-                        
-                     })
-              .catch(err => {console.log("err : ",err)})
-  
+           const fetchData = () => {
+            const url = mod === 1 ? "allOrders" : ("user/"+id)
+            fetch(BASE_URL+"order/"+url,{
+               method:"GET",
+               headers:{
+                  "Content-Type":"application/json",
+                  "Authorization":"Bearer "+token
+               }
+          }).then(res => res.json())
+            .then(data => {
+                        const {ok_data} = data
+                        if(ok_data === null)
+                        {
+                          ToastAndroid.showWithGravity("The error occurred during fetcing orders.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+                        }
+                        else {
+                           const {orders} = ok_data;
+                           setIsLoading(false)
+                           setOrders(orders)
+                        }
+                       
+                    })
+             .catch(err => {console.log("err : ",err)})
+           }
+
+           fetchData()
+
     },[])
   
     if(isLoading) return <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
@@ -42,7 +48,7 @@ const Orders = () => {
                          </View>
   
    const orderCardOnPress = (orderId) => {
-        router.push("/order/"+orderId)
+        router.push({pathname:"/order/"+orderId,params:{mod}})
   }
 
   return (

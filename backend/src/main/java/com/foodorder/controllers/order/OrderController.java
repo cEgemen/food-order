@@ -1,7 +1,6 @@
 package com.foodorder.controllers.order;
 
 import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +44,6 @@ public class OrderController extends BaseController implements IOrderController 
     @Override
     @GetMapping("user/{id}")
     public ResponseEntity<Response> getOrders(@PathVariable String id) {
-        log.info("api/order/user path");
         Map<String,?> okData = service.getOrders(id);
         return okResponse(okData);
     }  
@@ -60,8 +58,8 @@ public class OrderController extends BaseController implements IOrderController 
 
     @Override
     @PutMapping("updateOrder/{id}")
-    public ResponseEntity<Response> updateOrder(@PathVariable String orderId,@RequestBody IUDTOOrder order) {
-        Map<String,?> okData = service.updateOrder(orderId, order);
+    public ResponseEntity<Response> updateOrder(@PathVariable String id,@RequestBody IUDTOOrder order) {
+        Map<String,?> okData = service.updateOrder(id, order);
         return okResponse(okData);
     }
 
