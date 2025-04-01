@@ -11,7 +11,7 @@ public interface IOrderController {
 
     ResponseEntity<Response> getOrder(String orderId);
 
-    ResponseEntity<Response> getOrders(String id);
+    ResponseEntity<Response> getOrders(String id,int mod);
 
     ResponseEntity<Response> addOrder(IUDTOOrder order);
 

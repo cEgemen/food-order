@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends MongoRepository<Order,String> {
     
-    @Query("{ 'order_owner' : ?0 }")
-    List<Order> findByOrderOwner(String id);
+    @Query("{ 'order_owner' : ?0, 'status' : { $in: ?1 } }")
+    List<Order> findByOrderOwner(String id,List<String> inList);
+
+
 
 }

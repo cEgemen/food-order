@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodorder.base.response.BaseController;
@@ -43,8 +44,9 @@ public class OrderController extends BaseController implements IOrderController 
 
     @Override
     @GetMapping("user/{id}")
-    public ResponseEntity<Response> getOrders(@PathVariable String id) {
-        Map<String,?> okData = service.getOrders(id);
+    public ResponseEntity<Response> getOrders(@PathVariable String id,@RequestParam int mod) {
+        System.out.println("mod : "+mod);
+        Map<String,?> okData = service.getOrders(id,mod);
         return okResponse(okData);
     }  
 

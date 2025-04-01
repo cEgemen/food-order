@@ -66,9 +66,11 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Map<String, ?> getOrders(String id) {
+    public Map<String, ?> getOrders(String id,int mod) {
+      List<String> inList = mod == 1 ? List.of("NEW","COOKING","DELIVERING") : List.of("DELIVERED");
+      System.out.println("inList : "+inList);
       List<DTOOrder> resultDtoOrders = new ArrayList<>();
-      List<Order> result = repository.findByOrderOwner(id);
+      List<Order> result = repository.findByOrderOwner(id,inList);
       Optional<User> resUser = userRepository.findById(id);
       if(!resUser.isPresent())
       {

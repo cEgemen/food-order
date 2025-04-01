@@ -9,7 +9,7 @@ public interface IOrderService {
 
     Map<String,?> getOrder(String orderId);
 
-    Map<String,?> getOrders(String id);
+    Map<String,?> getOrders(String id,int mod);
 
     Map<String,?> addOrder(IUDTOOrder order);
 
